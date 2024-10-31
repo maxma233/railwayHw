@@ -56,7 +56,7 @@ public class HerokuApplication {
 
 
   private String getRandomString() {
-    int length = 10; 
+    int length = 10; // Set the desired length of the random string
     String characterSet = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
     Random random = new Random();
     StringBuilder randomString = new StringBuilder(length);
@@ -68,7 +68,7 @@ public class HerokuApplication {
 
     return randomString.toString();
   }
-
+  
   @RequestMapping("/db")
   String db(Map<String, Object> model) {
     try (Connection connection = dataSource.getConnection()) {
@@ -78,7 +78,7 @@ public class HerokuApplication {
       stmt.executeUpdate("CREATE TABLE IF NOT EXISTS table_timestamp_and_random_string (tick timestamp, random_string varchar(30))");
       stmt.executeUpdate("INSERT INTO table_timestamp_and_random_string VALUES (now(), '" + getRandomString() + "')");
 
-      ResultSet rs = stmt.executeQuery("SELECT tick FROM table_timestamp_and_random_string");
+      ResultSet rs = stmt.executeQuery("SELECT tick,random_string FROM table_timestamp_and_random_string");
 
       ArrayList<String> output = new ArrayList<String>();
       while (rs.next()) {
